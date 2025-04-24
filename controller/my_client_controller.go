@@ -167,7 +167,7 @@ func UpdateMyClient(ctx *fiber.Ctx) error {
 	var myClient models.MyClient
 	slug := ctx.Query("slug")
 
-	result := database.DB.Where("slug =", slug).First(&myClient)
+	result := database.DB.Where("slug LIKE ?", "%"+slug+"%").First(&myClient)
 	if result.Error != nil {
 		return ctx.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"message": "My Client not found",
